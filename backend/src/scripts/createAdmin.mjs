@@ -25,13 +25,11 @@ const createAdmin = async () => {
     if (existingAdmin) {
       existingAdmin.role = "admin";
       existingAdmin.isEmailVerified = true;
-      if (!existingAdmin.password) {
-        existingAdmin.password = adminData.password;
-      }
+      existingAdmin.password = adminData.password;
       await existingAdmin.save();
-      console.log("Admin user updated (verified + admin role).");
+      console.log("Admin user reset (verified + password admin123).");
       console.log("Email:", existingAdmin.email);
-      console.log("Password: admin123 (if you never changed it)");
+      console.log("Password: admin123");
       process.exit(0);
     }
 

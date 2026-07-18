@@ -45,7 +45,11 @@ const PatientPortal = () => {
       toast.success("Login successful!");
       navigate(data.user.role === "admin" ? "/admin" : "/dashboard");
     } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed. Please try again.");
+      toast.error(
+        error.response?.data?.message ||
+          error.response?.data?.error ||
+          "Login failed. Please try again."
+      );
     } finally {
       setLoading(false);
     }
