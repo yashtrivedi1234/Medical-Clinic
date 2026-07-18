@@ -28,8 +28,13 @@ const Dashboard = () => {
   const fetchUser = async () => {
     try {
       const response = await api.get("/user/profile");
-      setUser(response.data.data.user);
-      localStorage.setItem("user", JSON.stringify(response.data.data.user));
+      const nextUser = response.data.data.user;
+      if (nextUser.role === "admin") {
+        navigate("/admin", { replace: true });
+        return;
+      }
+      setUser(nextUser);
+      localStorage.setItem("user", JSON.stringify(nextUser));
     } catch (error) {
       if (error.response?.status === 401) {
         navigate("/portal");

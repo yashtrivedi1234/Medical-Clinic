@@ -25,15 +25,16 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 
 function AppShell() {
   const { pathname } = useLocation();
-  const hideFooter =
-    pathname.startsWith("/dashboard") || pathname.startsWith("/admin");
+  const isAdmin = pathname.startsWith("/admin");
+  const hideChrome =
+    pathname.startsWith("/dashboard") || isAdmin;
 
   return (
     <div className="min-h-dvh flex flex-col bg-medical-light">
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
-      <Navbar />
+      {!isAdmin && <Navbar />}
       <main id="main-content" className="flex-grow" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -54,7 +55,7 @@ function AppShell() {
           </Route>
         </Routes>
       </main>
-      {!hideFooter && <Footer />}
+      {!hideChrome && <Footer />}
       <ToastContainer
         position="top-right"
         autoClose={3000}

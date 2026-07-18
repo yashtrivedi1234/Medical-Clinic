@@ -28,7 +28,7 @@ const PatientPortal = () => {
       const userData = JSON.parse(storedUser);
       setUser(userData);
       if (userData.isEmailVerified) {
-        navigate("/dashboard");
+        navigate(userData.role === "admin" ? "/admin" : "/dashboard");
       }
     }
   }, [navigate]);
@@ -43,7 +43,7 @@ const PatientPortal = () => {
       localStorage.setItem("user", JSON.stringify(data.user));
       setUser(data.user);
       toast.success("Login successful!");
-      navigate("/dashboard");
+      navigate(data.user.role === "admin" ? "/admin" : "/dashboard");
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed. Please try again.");
     } finally {
@@ -85,7 +85,7 @@ const PatientPortal = () => {
   };
 
   if (user && user.isEmailVerified) {
-    navigate("/dashboard");
+    navigate(user.role === "admin" ? "/admin" : "/dashboard");
     return null;
   }
 

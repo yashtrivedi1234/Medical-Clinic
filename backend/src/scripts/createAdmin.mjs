@@ -17,12 +17,21 @@ const createAdmin = async () => {
       phone: "+1 (555) 000-0000",
       password: "admin123", // Change this in production!
       role: "admin",
+      isEmailVerified: true,
     };
 
     // Check if admin already exists
     const existingAdmin = await User.findOne({ email: adminData.email });
     if (existingAdmin) {
-      console.log("Admin user already exists!");
+      existingAdmin.role = "admin";
+      existingAdmin.isEmailVerified = true;
+      if (!existingAdmin.password) {
+        existingAdmin.password = adminData.password;
+      }
+      await existingAdmin.save();
+      console.log("Admin user updated (verified + admin role).");
+      console.log("Email:", existingAdmin.email);
+      console.log("Password: admin123 (if you never changed it)");
       process.exit(0);
     }
 
