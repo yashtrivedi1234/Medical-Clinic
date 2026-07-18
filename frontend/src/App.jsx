@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,7 +14,6 @@ import Appointments from "./pages/Appointments.jsx";
 import Contact from "./pages/Contact.jsx";
 import PatientPortal from "./pages/PatientPortal.jsx";
 import AdminPanel from "./admin/AdminPanel.jsx";
-import AuthCallback from "./pages/AuthCallback.jsx";
 import VerifyEmail from "./pages/VerifyEmail.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import DashboardHome from "./pages/DashboardHome.jsx";
@@ -24,54 +23,65 @@ import DashboardMedicalRecords from "./pages/DashboardMedicalRecords.jsx";
 import DashboardSettings from "./pages/DashboardSettings.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 
+function AppShell() {
+  const { pathname } = useLocation();
+  const hideFooter =
+    pathname.startsWith("/dashboard") || pathname.startsWith("/admin");
+
+  return (
+    <div className="min-h-dvh flex flex-col bg-medical-light">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      <Navbar />
+      <main id="main-content" className="flex-grow" tabIndex={-1}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/doctors" element={<Doctors />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/appointments" element={<Appointments />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/portal" element={<PatientPortal />} />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/verify-email/:token" element={<VerifyEmail />} />
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route index element={<DashboardHome />} />
+            <Route path="profile" element={<DashboardProfile />} />
+            <Route path="appointments" element={<DashboardAppointments />} />
+            <Route path="medical-records" element={<DashboardMedicalRecords />} />
+            <Route path="settings" element={<DashboardSettings />} />
+          </Route>
+        </Routes>
+      </main>
+      {!hideFooter && <Footer />}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </div>
+  );
+}
+
 function App() {
   return (
     <ErrorBoundary>
-      <Router>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <ScrollToTop />
-        <div className="min-h-screen flex flex-col">
-          <Navbar />
-          <main className="flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/doctors" element={<Doctors />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/appointments" element={<Appointments />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/portal" element={<PatientPortal />} />
-              <Route path="/admin" element={<AdminPanel />} />
-              <Route path="/auth/callback" element={<AuthCallback />} />
-              <Route path="/verify-email/:token" element={<VerifyEmail />} />
-              <Route path="/dashboard" element={<Dashboard />}>
-                <Route index element={<DashboardHome />} />
-                <Route path="profile" element={<DashboardProfile />} />
-                <Route
-                  path="appointments"
-                  element={<DashboardAppointments />}
-                />
-                <Route
-                  path="medical-records"
-                  element={<DashboardMedicalRecords />}
-                />
-                <Route path="settings" element={<DashboardSettings />} />
-              </Route>
-            </Routes>
-          </main>
-          <Footer />
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-        </div>
+        <AppShell />
       </Router>
     </ErrorBoundary>
   );

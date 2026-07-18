@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   FiHome,
@@ -23,6 +22,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUser = async () => {
@@ -48,50 +48,52 @@ const Dashboard = () => {
   };
 
   const menuItems = [
-    { path: "/dashboard", label: "Dashboard", icon: FiHome },
+    { path: "/dashboard", label: "Overview", icon: FiHome },
     { path: "/dashboard/profile", label: "Profile", icon: FiUser },
     { path: "/dashboard/appointments", label: "Appointments", icon: FiCalendar },
-    {
-      path: "/dashboard/medical-records",
-      label: "Medical Records",
-      icon: FiFileText,
-    },
+    { path: "/dashboard/medical-records", label: "Records", icon: FiFileText },
     { path: "/dashboard/settings", label: "Settings", icon: FiSettings },
   ];
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-medical-blue"></div>
+      <div className="min-h-screen flex items-center justify-center bg-medical-light pt-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-2 border-medical-border border-t-medical-blue" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
+    <div className="min-h-screen bg-medical-light pt-20">
       <div className="flex">
-        {/* Sidebar */}
+        {sidebarOpen && (
+          <button
+            type="button"
+            className="fixed inset-0 bg-medical-deep/40 z-40 lg:hidden"
+            aria-label="Close sidebar"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
         <aside
-          className={`fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out ${
+          className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-medical-border transform transition-transform duration-200 ease-out pt-20 lg:pt-0 ${
             sidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } lg:translate-x-0 lg:static lg:inset-0`}
+          } lg:translate-x-0 lg:static lg:inset-0 lg:min-h-[calc(100vh-5rem)]`}
         >
-          <div className="flex flex-col h-full">
-            {/* Sidebar Header */}
-            <div className="p-6 border-b">
-              <div className="flex items-center justify-between">
-                <h2 className="text-xl font-bold text-gray-800">Dashboard</h2>
-                <button
-                  onClick={() => setSidebarOpen(false)}
-                  className="lg:hidden text-gray-600"
-                >
-                  <FiX size={24} />
-                </button>
-              </div>
+          <div className="flex flex-col h-full lg:h-[calc(100vh-5rem)] lg:sticky lg:top-20">
+            <div className="p-5 border-b border-medical-border flex items-center justify-between">
+              <h2 className="font-heading text-lg font-bold text-medical-ink">My care</h2>
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(false)}
+                className="lg:hidden min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-medical-soft rounded-lg hover:bg-medical-muted"
+                aria-label="Close menu"
+              >
+                <FiX size={22} />
+              </button>
             </div>
 
-            {/* Navigation */}
-            <nav className="flex-1 p-4 space-y-2">
+            <nav className="flex-1 p-3 space-y-1" aria-label="Dashboard">
               {menuItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = location.pathname === item.path;
@@ -100,55 +102,53 @@ const Dashboard = () => {
                     key={item.path}
                     to={item.path}
                     onClick={() => setSidebarOpen(false)}
-                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                    className={`flex items-center gap-3 min-h-[44px] px-4 py-2.5 rounded-lg font-medium transition-colors duration-200 ${
                       isActive
                         ? "bg-medical-blue text-white"
-                        : "text-gray-700 hover:bg-gray-100"
+                        : "text-medical-ink hover:bg-medical-muted"
                     }`}
                   >
-                    <Icon />
+                    <Icon aria-hidden />
                     <span>{item.label}</span>
                   </Link>
                 );
               })}
             </nav>
 
-            {/* User Info & Logout */}
-            <div className="p-4 border-t">
-              <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                <p className="font-semibold text-gray-800">{user?.name}</p>
-                <p className="text-sm text-gray-600">{user?.email}</p>
+            <div className="p-4 border-t border-medical-border">
+              <div className="mb-3 p-3 bg-medical-light rounded-lg">
+                <p className="font-heading font-semibold text-medical-ink text-sm">{user?.name}</p>
+                <p className="text-xs text-medical-soft truncate">{user?.email}</p>
               </div>
               <button
+                type="button"
                 onClick={handleLogout}
-                className="w-full flex items-center space-x-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                className="w-full flex items-center gap-3 min-h-[44px] px-4 py-2.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium"
               >
-                <FiLogOut />
+                <FiLogOut aria-hidden />
                 <span>Logout</span>
               </button>
             </div>
           </div>
         </aside>
 
-        {/* Main Content */}
-        <main className="flex-1 lg:ml-64">
-          {/* Mobile Header */}
-          <div className="lg:hidden bg-white shadow-sm p-4 flex items-center justify-between">
+        <main className="flex-1 min-w-0">
+          <div className="lg:hidden bg-white border-b border-medical-border px-4 py-3 flex items-center justify-between sticky top-20 z-30">
             <button
+              type="button"
               onClick={() => setSidebarOpen(true)}
-              className="text-gray-600"
+              className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-medical-ink rounded-lg hover:bg-medical-muted"
+              aria-label="Open menu"
             >
-              <FiMenu size={24} />
+              <FiMenu size={22} />
             </button>
-            <h1 className="text-lg font-semibold text-gray-800">
-              {menuItems.find((item) => item.path === location.pathname)
-                ?.label || "Dashboard"}
+            <h1 className="font-heading text-base font-semibold text-medical-ink">
+              {menuItems.find((item) => item.path === location.pathname)?.label || "Dashboard"}
             </h1>
-            <div className="w-6"></div>
+            <div className="w-11" />
           </div>
 
-          {/* Content */}
-          <div className="p-6">
+          <div className="p-5 sm:p-8 max-w-5xl">
             <Outlet />
           </div>
         </main>
@@ -158,4 +158,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-

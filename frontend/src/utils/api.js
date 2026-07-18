@@ -1,12 +1,15 @@
 import axios from "axios";
-import { API_BASE_URL } from "../config/constants";
+
+// Backend runs on 5001 (macOS often blocks 5000). Override via REACT_APP_API_URL.
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL || "http://localhost:5001/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
-  timeout: 10000, // 10 seconds
+  timeout: 10000,
 });
 
 // Add token to requests if available

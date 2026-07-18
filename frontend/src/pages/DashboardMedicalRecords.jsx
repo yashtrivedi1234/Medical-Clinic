@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { FiFileText, FiPlus, FiCalendar } from "react-icons/fi";
+import { FiFileText, FiCalendar } from "react-icons/fi";
 import api from "../utils/api";
 import { toast } from "react-toastify";
 import Loading from '../components/Loading.jsx';
@@ -35,16 +35,16 @@ const DashboardMedicalRecords = () => {
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Medical Records</h1>
+          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-medical-ink">Medical Records</h1>
         </div>
 
         {medicalHistory.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-            <FiFileText className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          <div className="bg-white rounded-xl shadow-soft border border-medical-border/50 p-12 text-center">
+            <FiFileText className="w-16 h-16 text-medical-soft mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-medical-ink mb-2">
               No Medical Records
             </h3>
-            <p className="text-gray-600">
+            <p className="text-medical-soft">
               Your medical history will appear here once your doctor adds records.
             </p>
           </div>
@@ -56,22 +56,22 @@ const DashboardMedicalRecords = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-lg p-6"
+                className="bg-white rounded-xl shadow-soft border border-medical-border/50 p-6"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    <h3 className="text-xl font-semibold text-medical-ink mb-2">
                       {record.condition}
                     </h3>
                     {record.diagnosisDate && (
-                      <p className="text-gray-600 mb-2 flex items-center">
+                      <p className="text-medical-soft mb-2 flex items-center">
                         <FiCalendar className="mr-2" />
                         Diagnosed:{" "}
                         {new Date(record.diagnosisDate).toLocaleDateString()}
                       </p>
                     )}
                     {record.notes && (
-                      <p className="text-gray-600">{record.notes}</p>
+                      <p className="text-medical-soft">{record.notes}</p>
                     )}
                   </div>
                 </div>

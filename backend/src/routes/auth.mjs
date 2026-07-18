@@ -9,7 +9,6 @@ import { authLimiter } from "../middleware/rateLimiter.mjs";
 import constants from "../config/constants.mjs";
 import { sendVerificationEmail } from "../utils/emailService.mjs";
 import { generateEmailVerificationToken } from "../utils/generateToken.mjs";
-import passport from "passport";
 
 const router = express.Router();
 
@@ -249,41 +248,6 @@ router.get(
         user,
       },
     });
-  })
-);
-
-// @route   GET /api/auth/google
-// @desc    Initiate Google OAuth
-// @access  Public
-router.get(
-  "/google",
-  passport.authenticate("google", {
-    scope: ["profile", "email"],
-  })
-);
-
-// @route   GET /api/auth/google/callback
-// @desc    Google OAuth callback
-// @access  Public
-router.get(
-  "/google/callback",
-  passport.authenticate("google", { session: false }),
-  asyncHandler(async (req, res) => {
-    const token = generateToken(req.user._id);
-    
-    // Redirect to frontend with token
-    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
-    res.redirect(
-      `${frontendUrl}/auth/callback?token=${token}&user=${encodeURIComponent(
-        JSON.stringify({
-          id: req.user._id,
-          name: req.user.name,
-          email: req.user.email,
-          role: req.user.role,
-          isEmailVerified: req.user.isEmailVerified,
-        })
-      )}`
-    );
   })
 );
 

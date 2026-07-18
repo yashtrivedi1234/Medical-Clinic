@@ -163,24 +163,37 @@ const seedData = async () => {
     await mongoose.connect(mongoURI);
     console.log(`Connected to MongoDB: ${mongoose.connection.host}`);
 
-    // Clear existing data (optional - comment out if you want to keep existing data)
-    // await Doctor.deleteMany({});
-    // await Service.deleteMany({});
-    // await Testimonial.deleteMany({});
+    // Legacy index from older schema breaks inserts when slug is missing
+    try {
+      await mongoose.connection.collection("services").dropIndex("slug_1");
+    } catch {
+      /* index may not exist */
+    }
 
-    // Insert doctors
-    const insertedDoctors = await Doctor.insertMany(doctors);
-    console.log(`Inserted ${insertedDoctors.length} doctors`);
+    for (const doctor of doctors) {
+      await Doctor.updateOne({ name: doctor.name }, { $set: doctor }, { upsert: true });
+    }
+    console.log(`Upserted ${doctors.length} doctors`);
 
-    // Insert services
-    const insertedServices = await Service.insertMany(services);
-    console.log(`Inserted ${insertedServices.length} services`);
+    for (const service of services) {
+      await Service.updateOne(
+        { name: service.name },
+        { $set: { ...service, isActive: true } },
+        { upsert: true }
+      );
+    }
+    console.log(`Upserted ${services.length} services`);
 
-    // Insert testimonials
-    const insertedTestimonials = await Testimonial.insertMany(testimonials);
-    console.log(`Inserted ${insertedTestimonials.length} testimonials`);
+    for (const testimonial of testimonials) {
+      const exists = await Testimonial.findOne({
+        patientName: testimonial.patientName,
+        comment: testimonial.comment,
+      });
+      if (!exists) await Testimonial.create(testimonial);
+    }
+    console.log(`Ensured ${testimonials.length} testimonials`);
 
-    console.log("Seed data inserted successfully!");
+    console.log("Seed data ready!");
     process.exit(0);
   } catch (error) {
     console.error("Error seeding data:", error);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FiCalendar, FiClock, FiUser, FiXCircle, FiArrowRight } from "react-icons/fi";
+import { FiCalendar, FiClock, FiXCircle } from "react-icons/fi";
 import api from "../utils/api";
 import { toast } from "react-toastify";
 import Loading from '../components/Loading.jsx';
@@ -51,7 +51,7 @@ const DashboardAppointments = () => {
       case "cancelled":
         return "bg-red-100 text-red-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-medical-muted text-medical-ink";
     }
   };
 
@@ -77,10 +77,10 @@ const DashboardAppointments = () => {
         animate={{ opacity: 1, y: 0 }}
       >
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">My Appointments</h1>
+          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-medical-ink">My Appointments</h1>
           <Link
             to="/appointments"
-            className="px-6 py-3 bg-medical-blue text-white rounded-lg hover:bg-medical-teal transition-colors font-medium flex items-center space-x-2"
+            className="btn-primary flex items-center space-x-2"
           >
             <FiCalendar />
             <span>Book New Appointment</span>
@@ -94,10 +94,10 @@ const DashboardAppointments = () => {
               <button
                 key={status}
                 onClick={() => setFilter(status)}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors capitalize ${
+                className={`min-h-[44px] px-4 py-2 rounded-lg font-medium transition-colors capitalize cursor-pointer ${
                   filter === status
                     ? "bg-medical-blue text-white"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
+                    : "bg-white text-medical-ink border border-medical-border hover:bg-medical-muted"
                 }`}
               >
                 {status}
@@ -108,19 +108,19 @@ const DashboardAppointments = () => {
 
         {/* Appointments List */}
         {filteredAppointments.length === 0 ? (
-          <div className="bg-white rounded-xl shadow-lg p-12 text-center">
-            <FiCalendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          <div className="bg-white rounded-xl shadow-soft border border-medical-border/50 p-12 text-center">
+            <FiCalendar className="w-16 h-16 text-medical-soft mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-medical-ink mb-2">
               No Appointments Found
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-medical-soft mb-6">
               {filter === "all"
                 ? "You don't have any appointments yet."
                 : `No ${filter} appointments found.`}
             </p>
             <Link
               to="/appointments"
-              className="inline-block px-6 py-3 bg-medical-blue text-white rounded-lg hover:bg-medical-teal transition-colors font-medium"
+              className="inline-block btn-primary"
             >
               Book an Appointment
             </Link>
@@ -132,12 +132,12 @@ const DashboardAppointments = () => {
                 key={apt._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-xl shadow-lg p-6"
+                className="bg-white rounded-xl shadow-soft border border-medical-border/50 p-6"
               >
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-4 mb-3">
-                      <h3 className="text-xl font-semibold text-gray-800">
+                      <h3 className="text-xl font-semibold text-medical-ink">
                         {apt.doctor?.name || "Doctor"}
                       </h3>
                       <span
@@ -148,14 +148,14 @@ const DashboardAppointments = () => {
                         {apt.status}
                       </span>
                     </div>
-                    <p className="text-gray-600 mb-2">
+                    <p className="text-medical-soft mb-2">
                       <strong>Specialization:</strong>{" "}
                       {apt.doctor?.specialization || "N/A"}
                     </p>
-                    <p className="text-gray-600 mb-2">
+                    <p className="text-medical-soft mb-2">
                       <strong>Department:</strong> {apt.department}
                     </p>
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                    <div className="flex flex-wrap gap-4 text-sm text-medical-soft">
                       <span className="flex items-center">
                         <FiCalendar className="mr-2" />
                         {new Date(apt.appointmentDate).toLocaleDateString()}
@@ -166,7 +166,7 @@ const DashboardAppointments = () => {
                       </span>
                     </div>
                     {apt.notes && (
-                      <p className="text-gray-600 mt-2 text-sm">
+                      <p className="text-medical-soft mt-2 text-sm">
                         <strong>Notes:</strong> {apt.notes}
                       </p>
                     )}

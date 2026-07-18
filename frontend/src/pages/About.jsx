@@ -1,197 +1,148 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiAward, FiTarget, FiHeart, FiCheckCircle } from 'react-icons/fi';
+import { FiAward, FiTarget, FiHeart, FiCheckCircle, FiArrowRight } from 'react-icons/fi';
+
+const STORY_IMAGE =
+  'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80';
+
+const fadeUp = {
+  initial: { opacity: 0, y: 16 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.35, ease: 'easeOut' },
+};
 
 const About = () => {
   return (
     <div className="pt-20">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-medical-light via-white to-medical-light py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">About MediCare Clinic</h1>
-            <p className="text-xl text-gray-600">
-              Delivering exceptional healthcare with compassion, innovation, and excellence for over 25 years.
+      <section className="page-header">
+        <div className="container-page max-w-3xl">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}>
+            <p className="text-medical-blue font-heading font-semibold mb-2">About MediCare</p>
+            <h1 className="font-heading text-4xl md:text-5xl font-bold text-medical-ink mb-4">
+              Healthcare rooted in trust
+            </h1>
+            <p className="text-xl text-medical-soft">
+              Delivering exceptional care with compassion and clarity for over 25 years.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Introduction */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl font-bold text-gray-800 mb-6">Our Story</h2>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                Founded in 1998, MediCare Clinic has been at the forefront of providing comprehensive
-                healthcare services to our community. We started with a simple mission: to make quality
-                healthcare accessible to everyone.
+      <section className="section bg-white">
+        <div className="container-page">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <motion.div {...fadeUp}>
+              <h2 className="font-heading text-3xl font-bold text-medical-ink mb-6">Our story</h2>
+              <p className="text-medical-soft mb-4 leading-relaxed">
+                Founded in 1998, MediCare Clinic set out to make quality healthcare accessible to everyone in our community.
               </p>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                Over the years, we have grown into a trusted healthcare institution, serving thousands
-                of patients with dedication and care. Our team of experienced doctors, nurses, and
-                support staff work together to ensure the best possible outcomes for our patients.
+              <p className="text-medical-soft mb-4 leading-relaxed">
+                We have grown into a trusted institution — doctors, nurses, and support staff working as one team for better outcomes.
               </p>
-              <p className="text-gray-600 leading-relaxed">
-                Today, we continue to invest in modern technology, advanced medical equipment, and
-                continuous training for our staff to maintain the highest standards of medical care.
+              <p className="text-medical-soft leading-relaxed">
+                Today we invest in modern technology, advanced equipment, and continuous training to keep care standards high.
               </p>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-medical-light rounded-2xl p-8 h-96 flex items-center justify-center"
-            >
-              <div className="text-6xl">🏥</div>
+            <motion.div {...fadeUp} className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lift">
+              <img
+                src={STORY_IMAGE}
+                alt="MediCare clinic care team with a patient"
+                className="w-full h-full object-cover"
+                loading="lazy"
+                width={1200}
+                height={900}
+              />
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Mission, Vision, Values */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white p-8 rounded-xl shadow-lg"
-            >
-              <FiTarget className="w-12 h-12 text-medical-blue mb-4" />
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Mission</h3>
-              <p className="text-gray-600">
-                To provide accessible, high-quality healthcare services that improve the health and
-                well-being of our community through compassionate care, medical excellence, and
-                innovative solutions.
+      <section className="section bg-medical-light">
+        <div className="container-page">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+            <motion.div {...fadeUp}>
+              <FiTarget className="w-9 h-9 text-medical-blue mb-4" aria-hidden />
+              <h3 className="font-heading text-2xl font-bold text-medical-ink mb-3">Mission</h3>
+              <p className="text-medical-soft leading-relaxed">
+                Accessible, high-quality care that improves community health through compassion, excellence, and innovation.
               </p>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="bg-white p-8 rounded-xl shadow-lg"
-            >
-              <FiAward className="w-12 h-12 text-medical-blue mb-4" />
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Vision</h3>
-              <p className="text-gray-600">
-                To be the leading healthcare provider in the region, recognized for excellence in
-                patient care, medical innovation, and community health improvement.
+            <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.05 }}>
+              <FiAward className="w-9 h-9 text-medical-blue mb-4" aria-hidden />
+              <h3 className="font-heading text-2xl font-bold text-medical-ink mb-3">Vision</h3>
+              <p className="text-medical-soft leading-relaxed">
+                To be the region’s most trusted clinic — known for patient outcomes, medical innovation, and community wellness.
               </p>
             </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="bg-white p-8 rounded-xl shadow-lg"
-            >
-              <FiHeart className="w-12 h-12 text-medical-blue mb-4" />
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Values</h3>
-              <ul className="text-gray-600 space-y-2">
-                <li className="flex items-start">
-                  <FiCheckCircle className="mr-2 mt-1 text-medical-green flex-shrink-0" />
-                  <span>Compassion</span>
-                </li>
-                <li className="flex items-start">
-                  <FiCheckCircle className="mr-2 mt-1 text-medical-green flex-shrink-0" />
-                  <span>Excellence</span>
-                </li>
-                <li className="flex items-start">
-                  <FiCheckCircle className="mr-2 mt-1 text-medical-green flex-shrink-0" />
-                  <span>Integrity</span>
-                </li>
-                <li className="flex items-start">
-                  <FiCheckCircle className="mr-2 mt-1 text-medical-green flex-shrink-0" />
-                  <span>Innovation</span>
-                </li>
+            <motion.div {...fadeUp} transition={{ ...fadeUp.transition, delay: 0.1 }}>
+              <FiHeart className="w-9 h-9 text-medical-blue mb-4" aria-hidden />
+              <h3 className="font-heading text-2xl font-bold text-medical-ink mb-3">Values</h3>
+              <ul className="text-medical-soft space-y-2">
+                {['Compassion', 'Excellence', 'Integrity', 'Innovation'].map((v) => (
+                  <li key={v} className="flex items-center gap-2">
+                    <FiCheckCircle className="text-medical-green flex-shrink-0" aria-hidden />
+                    {v}
+                  </li>
+                ))}
               </ul>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Certifications */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Certifications & Accreditations</h2>
-            <p className="text-xl text-gray-600">Recognized for excellence in healthcare</p>
+      <section className="section bg-white">
+        <div className="container-page">
+          <motion.div {...fadeUp} className="mb-10 max-w-2xl">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-medical-ink mb-3">
+              Certifications & accreditations
+            </h2>
+            <p className="text-lg text-medical-soft">Recognized for excellence and compliance</p>
           </motion.div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              'JCI Accredited',
-              'ISO 9001 Certified',
-              'NABH Accredited',
-              'HIPAA Compliant'
-            ].map((cert, index) => (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {['JCI Accredited', 'ISO 9001 Certified', 'NABH Accredited', 'HIPAA Compliant'].map((cert, i) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-medical-light p-6 rounded-xl text-center"
+                key={cert}
+                {...fadeUp}
+                transition={{ ...fadeUp.transition, delay: i * 0.04 }}
+                className="border border-medical-border rounded-xl p-5 text-center bg-medical-light/50"
               >
-                <FiAward className="w-10 h-10 text-medical-blue mx-auto mb-3" />
-                <p className="font-semibold text-gray-800">{cert}</p>
+                <FiAward className="w-8 h-8 text-medical-blue mx-auto mb-3" aria-hidden />
+                <p className="font-heading font-semibold text-medical-ink text-sm sm:text-base">{cert}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Infrastructure */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Modern Infrastructure</h2>
-            <p className="text-xl text-gray-600">State-of-the-art facilities for your care</p>
+      <section className="section bg-medical-muted/30">
+        <div className="container-page">
+          <motion.div {...fadeUp} className="mb-10 max-w-2xl">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-medical-ink mb-3">
+              Modern infrastructure
+            </h2>
+            <p className="text-lg text-medical-soft">Facilities designed for precise, timely care</p>
           </motion.div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-8">
             {[
-              { title: 'Advanced Diagnostics', desc: 'Latest imaging and lab equipment' },
-              { title: 'Surgical Suites', desc: 'Modern operating rooms with cutting-edge technology' },
-              { title: 'Emergency Department', desc: '24/7 emergency care with rapid response' },
-              { title: 'ICU Facilities', desc: 'Intensive care units with advanced monitoring' },
-              { title: 'Pharmacy', desc: 'In-house pharmacy for convenience' },
-              { title: 'Rehabilitation Center', desc: 'Physical therapy and recovery services' }
-            ].map((facility, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white p-6 rounded-xl shadow-lg"
-              >
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">{facility.title}</h3>
-                <p className="text-gray-600">{facility.desc}</p>
+              { title: 'Advanced diagnostics', desc: 'Latest imaging and lab equipment' },
+              { title: 'Surgical suites', desc: 'Modern ORs with cutting-edge technology' },
+              { title: 'Emergency department', desc: '24/7 care with rapid response' },
+              { title: 'ICU facilities', desc: 'Intensive care with advanced monitoring' },
+              { title: 'In-house pharmacy', desc: 'Medications without an extra trip' },
+              { title: 'Rehabilitation', desc: 'Physical therapy and recovery support' },
+            ].map((facility, i) => (
+              <motion.div key={facility.title} {...fadeUp} transition={{ ...fadeUp.transition, delay: i * 0.03 }}>
+                <h3 className="font-heading text-lg font-semibold text-medical-ink mb-1">{facility.title}</h3>
+                <p className="text-medical-soft text-sm">{facility.desc}</p>
               </motion.div>
             ))}
+          </div>
+          <div className="mt-12">
+            <Link to="/appointments" className="btn-primary">
+              Book a visit <FiArrowRight aria-hidden />
+            </Link>
           </div>
         </div>
       </section>
@@ -200,4 +151,3 @@ const About = () => {
 };
 
 export default About;
-

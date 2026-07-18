@@ -107,12 +107,12 @@ const DashboardProfile = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">My Profile</h1>
+        <h1 className="font-heading text-2xl sm:text-3xl font-bold text-medical-ink mb-8">My Profile</h1>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-lg p-8">
+        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-soft border border-medical-border/50 p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label className="block text-medical-ink font-medium mb-2">
                 <FiUser className="inline mr-2" />
                 Full Name *
               </label>
@@ -122,12 +122,12 @@ const DashboardProfile = () => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label className="block text-medical-ink font-medium mb-2">
                 <FiMail className="inline mr-2" />
                 Email
               </label>
@@ -135,12 +135,12 @@ const DashboardProfile = () => {
                 type="email"
                 value={user?.email || ""}
                 disabled
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-600"
+                className="input-field bg-medical-muted text-medical-soft"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label className="block text-medical-ink font-medium mb-2">
                 <FiPhone className="inline mr-2" />
                 Phone Number
               </label>
@@ -149,12 +149,12 @@ const DashboardProfile = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label className="block text-medical-ink font-medium mb-2">
                 <FiCalendar className="inline mr-2" />
                 Date of Birth
               </label>
@@ -163,19 +163,19 @@ const DashboardProfile = () => {
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label className="block text-medical-ink font-medium mb-2">
                 Gender
               </label>
               <select
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               >
                 <option value="">Select Gender</option>
                 <option value="male">Male</option>
@@ -187,7 +187,7 @@ const DashboardProfile = () => {
 
           {/* Address Section */}
           <div className="mb-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+            <h3 className="text-xl font-semibold text-medical-ink mb-4 flex items-center">
               <FiMapPin className="mr-2" />
               Address
             </h3>
@@ -199,7 +199,7 @@ const DashboardProfile = () => {
                   value={formData.address.street}
                   onChange={handleChange}
                   placeholder="Street Address"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                  className="input-field"
                 />
               </div>
               <input
@@ -208,7 +208,7 @@ const DashboardProfile = () => {
                 value={formData.address.city}
                 onChange={handleChange}
                 placeholder="City"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
               <input
                 type="text"
@@ -216,7 +216,7 @@ const DashboardProfile = () => {
                 value={formData.address.state}
                 onChange={handleChange}
                 placeholder="State"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
               <input
                 type="text"
@@ -224,7 +224,7 @@ const DashboardProfile = () => {
                 value={formData.address.zipCode}
                 onChange={handleChange}
                 placeholder="Zip Code"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
               <input
                 type="text"
@@ -232,14 +232,14 @@ const DashboardProfile = () => {
                 value={formData.address.country}
                 onChange={handleChange}
                 placeholder="Country"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
             </div>
           </div>
 
           {/* Emergency Contact */}
           <div className="mb-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+            <h3 className="text-xl font-semibold text-medical-ink mb-4">
               Emergency Contact
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -249,7 +249,7 @@ const DashboardProfile = () => {
                 value={formData.emergencyContact.name}
                 onChange={handleChange}
                 placeholder="Contact Name"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
               <input
                 type="tel"
@@ -257,7 +257,7 @@ const DashboardProfile = () => {
                 value={formData.emergencyContact.phone}
                 onChange={handleChange}
                 placeholder="Phone Number"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
               <input
                 type="text"
@@ -265,7 +265,7 @@ const DashboardProfile = () => {
                 value={formData.emergencyContact.relationship}
                 onChange={handleChange}
                 placeholder="Relationship"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                className="input-field"
               />
             </div>
           </div>

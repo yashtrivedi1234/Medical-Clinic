@@ -1,9 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiArrowRight, FiClock, FiDollarSign } from 'react-icons/fi';
+import {
+  FiArrowRight,
+  FiClock,
+  FiDollarSign,
+  FiActivity,
+  FiHeart,
+  FiShield,
+  FiClipboard,
+  FiUser,
+  FiEye,
+} from 'react-icons/fi';
 import api from '../utils/api';
 import { toast } from 'react-toastify';
+
+const serviceIconMap = {
+  'General Medicine': FiActivity,
+  Pediatrics: FiHeart,
+  Orthopedics: FiShield,
+  Gynecology: FiHeart,
+  Cardiology: FiHeart,
+  Diagnostics: FiClipboard,
+  Dermatology: FiUser,
+  Neurology: FiEye,
+  Oncology: FiShield,
+};
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -16,15 +38,20 @@ const Services = () => {
   }, []);
 
   useEffect(() => {
-    filterServices();
+    if (departmentFilter === 'all') {
+      setFilteredServices(services);
+    } else {
+      setFilteredServices(services.filter((s) => s.department === departmentFilter));
+    }
   }, [departmentFilter, services]);
 
   const fetchServices = async () => {
     try {
       setLoading(true);
       const response = await api.get('/services');
-      setServices(response.data.data || []);
-      setFilteredServices(response.data.data || []);
+      const servicesData = response.data.data?.services || [];
+      setServices(servicesData);
+      setFilteredServices(servicesData);
     } catch (error) {
       toast.error('Failed to load services');
       console.error('Error fetching services:', error);
@@ -33,148 +60,115 @@ const Services = () => {
     }
   };
 
-  const filterServices = () => {
-    if (departmentFilter === 'all') {
-      setFilteredServices(services);
-    } else {
-      setFilteredServices(services.filter(service => service.department === departmentFilter));
-    }
-  };
-
-  const departments = ['all', ...new Set(services.map(service => service.department))];
-
-  const serviceIcons = {
-    'General Medicine': '🏥',
-    'Pediatrics': '👶',
-    'Orthopedics': '🦴',
-    'Gynecology': '👩',
-    'Cardiology': '❤️',
-    'Diagnostics': '🔬',
-    'Dermatology': '🧴',
-    'Neurology': '🧠',
-    'Oncology': '🎗️'
-  };
+  const departments = ['all', ...new Set(services.map((s) => s.department))];
 
   if (loading) {
     return (
-      <div className="pt-20 min-h-screen flex items-center justify-center">
+      <div className="pt-20 min-h-screen flex items-center justify-center bg-medical-light">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-medical-blue mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading services...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-2 border-medical-border border-t-medical-blue mx-auto mb-4" />
+          <p className="text-medical-soft">Loading services...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="pt-20 min-h-screen bg-gray-50">
-      {/* Header */}
-      <section className="bg-gradient-to-br from-medical-light via-white to-medical-light py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Our Medical Services</h1>
-            <p className="text-xl text-gray-600">
-              Comprehensive healthcare services tailored to meet your needs
+    <div className="pt-20 min-h-screen bg-medical-light">
+      <section className="page-header">
+        <div className="container-page max-w-3xl">
+          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
+            <h1 className="font-heading text-4xl md:text-5xl font-bold text-medical-ink mb-4">
+              Medical services
+            </h1>
+            <p className="text-xl text-medical-soft">
+              Comprehensive care tailored to your needs — from prevention to specialized treatment.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Filter */}
-      <section className="py-8 bg-white border-b">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap gap-4 justify-center">
+      <section className="py-6 bg-white border-b border-medical-border sticky top-20 z-30">
+        <div className="container-page">
+          <div className="flex flex-wrap gap-2 justify-start md:justify-center">
             {departments.map((dept) => (
               <button
                 key={dept}
+                type="button"
                 onClick={() => setDepartmentFilter(dept)}
-                className={`px-6 py-2 rounded-lg font-medium transition-colors ${
-                  departmentFilter === dept
-                    ? 'bg-medical-blue text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                className={departmentFilter === dept ? 'chip-active' : 'chip-idle'}
               >
-                {dept === 'all' ? 'All Services' : dept}
+                {dept === 'all' ? 'All services' : dept}
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="section">
+        <div className="container-page">
           {filteredServices.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-gray-600 text-xl">No services found in this department.</p>
+              <p className="text-medical-soft text-lg">No services found in this department.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredServices.map((service, index) => (
-                <motion.div
-                  key={service._id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow"
-                >
-                  <div className="text-5xl mb-4">
-                    {service.icon || serviceIcons[service.name] || '🏥'}
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-800 mb-3">{service.name}</h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">{service.description}</p>
-                  
-                  <div className="flex items-center justify-between mb-6 text-sm text-gray-500">
-                    {service.duration && (
-                      <div className="flex items-center">
-                        <FiClock className="mr-2" />
-                        <span>{service.duration} min</span>
-                      </div>
-                    )}
-                    {service.price > 0 && (
-                      <div className="flex items-center">
-                        <FiDollarSign className="mr-2" />
-                        <span>${service.price}</span>
-                      </div>
-                    )}
-                  </div>
+              {filteredServices.map((service, index) => {
+                const Icon = serviceIconMap[service.name] || FiActivity;
+                return (
+                  <motion.article
+                    key={service._id}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.04, duration: 0.3 }}
+                    className="bg-white rounded-2xl shadow-soft border border-medical-border/60 p-7 flex flex-col"
+                  >
+                    <div className="w-12 h-12 rounded-lg bg-medical-light text-medical-blue flex items-center justify-center mb-4">
+                      <Icon className="w-6 h-6" aria-hidden />
+                    </div>
+                    <h2 className="font-heading text-xl font-bold text-medical-ink mb-2">{service.name}</h2>
+                    <p className="text-medical-soft mb-5 leading-relaxed flex-1">{service.description}</p>
 
-                  <div className="mb-4">
-                    <span className="inline-block px-3 py-1 bg-medical-light text-medical-blue rounded-full text-sm font-medium">
+                    <div className="flex items-center justify-between mb-4 text-sm text-medical-soft">
+                      {service.duration && (
+                        <span className="inline-flex items-center gap-1.5">
+                          <FiClock aria-hidden /> {service.duration} min
+                        </span>
+                      )}
+                      {service.price > 0 && (
+                        <span className="inline-flex items-center gap-1.5">
+                          <FiDollarSign aria-hidden /> {service.price}
+                        </span>
+                      )}
+                    </div>
+
+                    <span className="inline-block self-start px-3 py-1 bg-medical-light text-medical-blue rounded-md text-sm font-medium mb-5">
                       {service.department}
                     </span>
-                  </div>
 
-                  <Link
-                    to="/appointments"
-                    className="inline-flex items-center text-medical-blue hover:text-medical-teal font-medium"
-                  >
-                    Book Appointment <FiArrowRight className="ml-2" />
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link to="/appointments" className="btn-primary w-full mt-auto">
+                      Book appointment <FiArrowRight aria-hidden />
+                    </Link>
+                  </motion.article>
+                );
+              })}
             </div>
           )}
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-medical-blue text-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-4">Need Help Choosing a Service?</h2>
-          <p className="text-xl mb-8 text-medical-light">
-            Our team is here to help you find the right care for your needs
+      <section className="py-14 bg-medical-blue text-white">
+        <div className="container-page text-center">
+          <h2 className="font-heading text-2xl md:text-3xl font-bold mb-3">Not sure which service you need?</h2>
+          <p className="text-primary-100 text-lg mb-8 max-w-xl mx-auto">
+            Our team will help you find the right care path.
           </p>
           <Link
             to="/contact"
-            className="inline-block px-8 py-3 bg-white text-medical-blue rounded-lg hover:bg-gray-100 transition-colors font-medium"
+            className="inline-flex items-center justify-center min-h-[44px] px-8 py-3 bg-white text-medical-blue rounded-lg font-heading font-semibold hover:bg-primary-50 transition-colors"
           >
-            Contact Us
+            Contact us
           </Link>
         </div>
       </section>
@@ -183,4 +177,3 @@ const Services = () => {
 };
 
 export default Services;
-

@@ -59,20 +59,20 @@ const DashboardSettings = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">Settings</h1>
+        <h1 className="font-heading text-2xl sm:text-3xl font-bold text-medical-ink mb-8">Settings</h1>
 
         <div className="space-y-6">
           {/* Notification Settings */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+          <div className="bg-white rounded-xl shadow-soft border border-medical-border/50 p-6">
+            <h2 className="text-2xl font-semibold text-medical-ink mb-6 flex items-center">
               <FiBell className="mr-2" />
               Notification Preferences
             </h2>
             <div className="space-y-4">
               <label className="flex items-center justify-between cursor-pointer">
                 <div>
-                  <p className="font-medium text-gray-800">Email Notifications</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="font-medium text-medical-ink">Email Notifications</p>
+                  <p className="text-sm text-medical-soft">
                     Receive notifications via email
                   </p>
                 </div>
@@ -85,8 +85,8 @@ const DashboardSettings = () => {
               </label>
               <label className="flex items-center justify-between cursor-pointer">
                 <div>
-                  <p className="font-medium text-gray-800">SMS Notifications</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="font-medium text-medical-ink">SMS Notifications</p>
+                  <p className="text-sm text-medical-soft">
                     Receive notifications via SMS
                   </p>
                 </div>
@@ -99,8 +99,8 @@ const DashboardSettings = () => {
               </label>
               <label className="flex items-center justify-between cursor-pointer">
                 <div>
-                  <p className="font-medium text-gray-800">Appointment Reminders</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="font-medium text-medical-ink">Appointment Reminders</p>
+                  <p className="text-sm text-medical-soft">
                     Get reminders before appointments
                   </p>
                 </div>
@@ -115,14 +115,14 @@ const DashboardSettings = () => {
           </div>
 
           {/* Change Password */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+          <div className="bg-white rounded-xl shadow-soft border border-medical-border/50 p-6">
+            <h2 className="text-2xl font-semibold text-medical-ink mb-6 flex items-center">
               <FiLock className="mr-2" />
               Change Password
             </h2>
             <form onSubmit={handlePasswordSubmit} className="space-y-4">
               <div>
-                <label className="block text-gray-700 font-medium mb-2">
+                <label className="block text-medical-ink font-medium mb-2">
                   Current Password
                 </label>
                 <input
@@ -131,11 +131,11 @@ const DashboardSettings = () => {
                   value={passwordData.currentPassword}
                   onChange={handlePasswordChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                  className="input-field"
                 />
               </div>
               <div>
-                <label className="block text-gray-700 font-medium mb-2">
+                <label className="block text-medical-ink font-medium mb-2">
                   New Password
                 </label>
                 <input
@@ -145,11 +145,11 @@ const DashboardSettings = () => {
                   onChange={handlePasswordChange}
                   required
                   minLength={6}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                  className="input-field"
                 />
               </div>
               <div>
-                <label className="block text-gray-700 font-medium mb-2">
+                <label className="block text-medical-ink font-medium mb-2">
                   Confirm New Password
                 </label>
                 <input
@@ -158,13 +158,13 @@ const DashboardSettings = () => {
                   value={passwordData.confirmPassword}
                   onChange={handlePasswordChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-medical-blue focus:border-transparent"
+                  className="input-field"
                 />
               </div>
               <button
                 type="submit"
                 disabled={saving}
-                className="px-6 py-3 bg-medical-blue text-white rounded-lg hover:bg-medical-teal transition-colors font-medium flex items-center space-x-2 disabled:opacity-50"
+                className="btn-primary flex items-center space-x-2 disabled:opacity-50"
               >
                 <FiSave />
                 <span>{saving ? "Changing..." : "Change Password"}</span>
@@ -173,20 +173,20 @@ const DashboardSettings = () => {
           </div>
 
           {/* Security */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+          <div className="bg-white rounded-xl shadow-soft border border-medical-border/50 p-6">
+            <h2 className="text-2xl font-semibold text-medical-ink mb-6 flex items-center">
               <FiShield className="mr-2" />
               Security
             </h2>
             <div className="space-y-4">
-              <div className="p-4 bg-gray-50 rounded-lg">
-                <p className="font-medium text-gray-800 mb-1">
+              <div className="p-4 bg-medical-light/50 rounded-lg">
+                <p className="font-medium text-medical-ink mb-1">
                   Two-Factor Authentication
                 </p>
-                <p className="text-sm text-gray-600 mb-3">
+                <p className="text-sm text-medical-soft mb-3">
                   Add an extra layer of security to your account
                 </p>
-                <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                <button className="px-4 py-2 bg-gray-200 text-medical-ink rounded-lg hover:bg-gray-300 transition-colors">
                   Coming Soon
                 </button>
               </div>

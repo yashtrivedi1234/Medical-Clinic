@@ -1,5 +1,5 @@
 export const API_BASE_URL =
-  process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+  process.env.REACT_APP_API_URL || "http://localhost:5001/api";
 
 export const ROUTES = {
   HOME: "/",
@@ -44,16 +44,4 @@ export const TIME_SLOTS = [
   "17:00",
   "17:30",
 ];
-
-export const SERVICE_ICONS = {
-  "General Medicine": "🏥",
-  Pediatrics: "👶",
-  Orthopedics: "🦴",
-  Gynecology: "👩",
-  Cardiology: "❤️",
-  Diagnostics: "🔬",
-  Dermatology: "🧴",
-  Neurology: "🧠",
-  Oncology: "🎗️",
-};
 
